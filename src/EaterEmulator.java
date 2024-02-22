@@ -144,7 +144,7 @@ public class EaterEmulator extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		options.updateSwingComponents();
-        options.applySwingValues();
+        options.applySwingValues();		
 	}
 
 	@Override
@@ -212,9 +212,21 @@ public class EaterEmulator extends JFrame implements ActionListener {
 				emu = new EaterEmulator();
 
 				for (String s : args) {
-					if (s.equals("-verbose"))
+					if (s.equals("-verbose")){
 						verbose = true;
 						System.out.println("Running in verbose mode!");
+					}else if (s.equals("-debug")){
+						debug = true;
+						cpu.debug = true;
+						System.out.println("Running in debug mode!");
+					}else {
+						System.out.println("Loading ROM: "+s);
+						rom.setROMArray(ROMLoader.readROM(new File(s)));	    
+						GraphicsPanel.requestFocus();		
+						GraphicsPanel.romPageString = EaterEmulator.rom.ROMString.substring(GraphicsPanel.romPage*960,(GraphicsPanel.romPage+1)*960);
+						cpu.reset();						
+						EaterEmulator.clockState = true;						
+					}
 				}
             }
         });
