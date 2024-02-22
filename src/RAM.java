@@ -32,6 +32,9 @@ public class RAM {
 		if(Short.toUnsignedInt(address) > 0x3FFF)
 			return;
 		array[Short.toUnsignedInt(address)] = data;
+	}
+
+	public void updateRAMString() {
 		RAMString = this.toString(8, true);
 	}
 	

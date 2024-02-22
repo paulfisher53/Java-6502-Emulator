@@ -226,6 +226,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
 				case 'j':
 					if (ramPage < 0x7f) {
 						ramPage+=1;
+						EaterEmulator.ram.updateRAMString();
 						ramPageString = EaterEmulator.ram.RAMString.substring(ramPage*960,(ramPage+1)*960);
 						if (ramPage > 0x7f) {
 							ramPage = 0x7f;
@@ -236,8 +237,13 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
 				case 'h':
 					if (ramPage > 0) {
 						ramPage-=1;
+						EaterEmulator.ram.updateRAMString();
 						ramPageString = EaterEmulator.ram.RAMString.substring(ramPage*960,(ramPage+1)*960);
 					}
+					break;
+				case 'g':
+					EaterEmulator.ram.updateRAMString();
+					ramPageString = EaterEmulator.ram.RAMString.substring(ramPage*960,(ramPage+1)*960);
 					break;
 				case 'r':
 					EaterEmulator.cpu.reset();
