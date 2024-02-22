@@ -34,7 +34,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
 		setPreferredSize(new Dimension(1936, 966));
 
 		try {
-			courierNewBold = Font.createFont(Font.TRUETYPE_FONT,this.getClass().getClassLoader().getResourceAsStream("courbd.ttf")).deriveFont(20f);
+			courierNewBold = Font.createFont(Font.TRUETYPE_FONT,this.getClass().getClassLoader().getResourceAsStream("courbd.ttf")).deriveFont(16f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(courierNewBold);
 		} catch (FontFormatException | IOException e) {
@@ -75,22 +75,13 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
         g.drawString("Speed: "+EaterEmulator.cpu.ClocksPerSecond+" Hz"+(EaterEmulator.slowerClock ? " (Slow)" : ""), 40, 110);
         
         //PAGE INDICATORS
-        g.drawString("(K) <-- "+ROMLoader.byteToHexString((byte)(romPage+0x80))+" --> (L)", rightAlignHelper-304, Math.max(getHeight()-91, 920));
-        g.drawString("(H) <-- "+ROMLoader.byteToHexString((byte)ramPage)+" --> (J)", rightAlignHelper-704, Math.max(getHeight()-91, 920));
+        g.drawString("(K) <-- ROM "+ROMLoader.byteToHexString((byte)(romPage+0x80))+" --> (L)", rightAlignHelper-350, 130);
+        g.drawString("(H) <-- RAM "+ROMLoader.byteToHexString((byte)ramPage)+" --> (J)", rightAlignHelper-750, 130);
         
         //ROM
-        g.drawString("ROM", rightAlignHelper-214, 130);
         drawString(g,romPageString, rightAlignHelper-379, 150);
         
-        //Stack Pointer Underline
-        if (ramPage == 1) {
-        	g.setColor(new Color(0.7f,0f,0f));
-        	g.fillRect(rightAlignHelper-708+36*(Byte.toUnsignedInt(EaterEmulator.cpu.stackPointer)%8), 156+23*((int)Byte.toUnsignedInt(EaterEmulator.cpu.stackPointer)/8), 25, 22);
-        	g.setColor(fgColor);
-        }
-        
         //RAM
-        g.drawString("RAM", rightAlignHelper-624, 130);
         drawString(g,ramPageString, rightAlignHelper-779, 150);
         
 	
@@ -101,7 +92,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
         g.drawString("Y: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Byte.toUnsignedInt(EaterEmulator.cpu.y)), 8)+" ("+ROMLoader.byteToHexString(EaterEmulator.cpu.y)+")", 35, 230);
         g.drawString("Stack Pointer: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Byte.toUnsignedInt(EaterEmulator.cpu.stackPointer)), 8)+" ("+ROMLoader.byteToHexString(EaterEmulator.cpu.stackPointer)+")", 35, 260);
         g.drawString("Program Counter: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Short.toUnsignedInt(EaterEmulator.cpu.programCounter)), 16)+" ("+ROMLoader.padStringWithZeroes(Integer.toHexString(Short.toUnsignedInt(EaterEmulator.cpu.programCounter)).toUpperCase(),4)+")", 35, 290);
-        g.drawString("Flags:             ("+ROMLoader.byteToHexString(EaterEmulator.cpu.flags)+")", 35, 320);
+        g.drawString("Flags:                    ("+ROMLoader.byteToHexString(EaterEmulator.cpu.flags)+")", 35, 320);
         
         g.drawString("Absolute Address: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Short.toUnsignedInt(EaterEmulator.cpu.addressAbsolute)), 16)+" ("+ROMLoader.byteToHexString((byte)(EaterEmulator.cpu.addressAbsolute/0xFF))+ROMLoader.byteToHexString((byte)EaterEmulator.cpu.addressAbsolute)+")", 35, 350);
         g.drawString("Relative Address: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Short.toUnsignedInt(EaterEmulator.cpu.addressRelative)), 16)+" ("+ROMLoader.byteToHexString((byte)(EaterEmulator.cpu.addressRelative/0xFF))+ROMLoader.byteToHexString((byte)EaterEmulator.cpu.addressRelative)+")", 35, 380);
