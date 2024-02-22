@@ -226,6 +226,7 @@ public class EaterEmulator extends JFrame implements ActionListener {
 						GraphicsPanel.romPageString = EaterEmulator.rom.ROMString.substring(GraphicsPanel.romPage*960,(GraphicsPanel.romPage+1)*960);
 						cpu.reset();						
 						EaterEmulator.clockState = true;						
+						EaterEmulator.serial.setVisible(true);					
 					}
 				}
             }
