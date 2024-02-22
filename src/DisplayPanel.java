@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener {
 	Timer frameTimer = new javax.swing.Timer(16, this);;
@@ -19,6 +20,10 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
 
 	public static Color bgColor = Color.blue;
 	public static Color fgColor = Color.white;
+	
+	public static ArrayList<Byte> keys = new ArrayList<Byte>();
+
+	boolean debug = false;
 	
 	public DisplayPanel() {
 		super(null);
@@ -167,11 +172,13 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
 			EaterEmulator.RAMopenButton.setBounds(rightAlignHelper-150, 45, 125, 25);
 			EaterEmulator.ShowLCDButton.setBounds(rightAlignHelper-300, 15, 125, 25);
 			EaterEmulator.ShowGPUButton.setBounds(rightAlignHelper-300, 45, 125, 25);
-			EaterEmulator.optionsButton.setBounds(rightAlignHelper-450, 15, 125, 25);
-			EaterEmulator.keyboardButton.setBounds(rightAlignHelper-450, 45, 125, 25);
+			EaterEmulator.ResetButton.setBounds(rightAlignHelper-450, 15, 125, 25);
+			EaterEmulator.ShowSerialButton.setBounds(rightAlignHelper-450, 45, 125, 25);
+			EaterEmulator.optionsButton.setBounds(rightAlignHelper-600, 15, 125, 25);
+			EaterEmulator.keyboardButton.setBounds(rightAlignHelper-600, 45, 125, 25);
 			this.repaint();
 
-			if (!EaterEmulator.options.isVisible())
+			if (!EaterEmulator.options.isVisible() && !EaterEmulator.serial.isVisible())
 				this.requestFocus();
 		} else if (e.getSource().equals(clocksPerSecondCheckTimer)) {
 			EaterEmulator.cpu.timeDelta = System.nanoTime()-EaterEmulator.cpu.lastTime;
