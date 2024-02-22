@@ -29,6 +29,8 @@ public class RAM {
 	}
 	
 	public void write(short address, byte data) {
+		if(Short.toUnsignedInt(address) > 0x3FFF)
+			return;
 		array[Short.toUnsignedInt(address)] = data;
 		RAMString = this.toString(8, true);
 	}
