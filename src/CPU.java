@@ -882,7 +882,7 @@ public class CPU {
 		
 	public void BIT() {
 		fetch();
-		short temp = (short)(a&fetched);
+		short temp = (short)(a&fetched);	
 		setFlag('Z',(temp&0x00FF)==0x00);
 		setFlag('N',(fetched&0x80)==0x80);
 		setFlag('V',(fetched&0x40)==0x40);
@@ -1240,7 +1240,9 @@ public class CPU {
 		fetch();
 		short value = (short)((short)fetched ^ 0x00FF);
 		short temp = (short)((short)a + value + (short)(getFlag('C') ? 1 : 0));
-		setFlag('C', temp > 255);
+		short temp2 = (short)((short)Byte.toUnsignedInt(a) - (short)Byte.toUnsignedInt(fetched) - (short)(getFlag('C') ? 0 : 1));
+
+		setFlag('C', temp2 >= 0);
 		setFlag('Z', (temp & 0x00FF) == 0);
 		setFlag('N', (temp & 0x80) == 0x80);
 		setFlag('V', (~((short)a^(short)fetched) & ((short)a^(short)temp) & 0x0080)==0x0080);
