@@ -124,8 +124,8 @@ public class LCD extends JFrame implements ActionListener {
 				//Set DDRAM Address
 				int newPos = (data & 0b01111111);
 
-				if (newPos >= 0 && newPos < text.length) {
-					cursorPos = (data & 0b01111111);
+				if (newPos > 0 && newPos < text.length) {
+					cursorPos = (data & 0b01111111) / 2;
 				} else {
 					cursorPos = 0;
 				}
