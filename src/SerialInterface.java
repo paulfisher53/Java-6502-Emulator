@@ -39,8 +39,10 @@ public class SerialInterface extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
             	if(isAcceptableChar(e.getKeyChar())) { // have to restrict characters like shift from being sent
-	            	hasKey = true;
 	                typedKey = (byte) e.getKeyChar();
+                    if(typedKey == 0xa)
+                        typedKey = (byte) 0xd;
+                    hasKey = true;
             	}
             }
 
@@ -77,8 +79,6 @@ public class SerialInterface extends JFrame implements ActionListener {
     public byte getKey() {
         if(!hasKey) return 0x00;
         hasKey = false;
-        if(typedKey == 0xa)
-            return 0xd;
     	return typedKey;
     }
     
@@ -91,7 +91,6 @@ public class SerialInterface extends JFrame implements ActionListener {
     public void receiveKey(byte keyChar) {
         textArea.append(String.valueOf((char)keyChar));
         textArea.setCaretPosition(textArea.getDocument().getLength());
-
     }
 
     // Function to reset the text area
